@@ -1,0 +1,507 @@
+[
+  {
+    "slug": "it-inventory",
+    "title": "IT Inventory Manager",
+    "category": "Development",
+    "stack": [
+      "Python",
+      "MySQL",
+      "Ubuntu",
+      "VirtualBox"
+    ],
+    "description": "A command-line application for keeping device names, types, IP addresses, and locations in one database.",
+    "flow": [
+      "Python CLI",
+      "MySQL connector",
+      "Ubuntu VM",
+      "devices table"
+    ],
+    "built": [
+      "Designed a devices table with id, name, device_type, ip_address, and location fields.",
+      "Built a menu around adding, viewing, updating, and deleting devices. The shared code includes the menu and add-device implementation; final coverage of every action still needs confirmation.",
+      "Connected the Windows Python client to MySQL in a local Ubuntu VM. Used a forwarded localhost port while troubleshooting VM networking."
+    ],
+    "issues": [
+      [
+        "Connection refused",
+        "Checked whether MySQL was reachable before debugging the application. A Windows Test-NetConnection check to localhost on TCP 3306 succeeded."
+      ],
+      [
+        "Parameterized SQL",
+        "Used %s placeholders and a separate values tuple with mysql.connector, keeping query structure separate from input."
+      ]
+    ],
+    "lessons": [
+      "Database persistence separates stored records from the Python program.",
+      "A successful port check verifies connectivity, while a query verifies the application/database path."
+    ],
+    "status": "In progress",
+    "repo": "https://github.com/MHRiver/it_inventory"
+  },
+  {
+    "slug": "proxmox",
+    "title": "Proxmox Home Lab",
+    "category": "Infrastructure",
+    "stack": [
+      "Proxmox",
+      "Dell PowerEdge",
+      "Linux",
+      "VMs & LXC"
+    ],
+    "description": "A home server environment for experimenting with virtual machines, containers, and self-hosted services.",
+    "flow": [
+      "Dell PowerEdge R630",
+      "Proxmox",
+      "VMs & LXC",
+      "Self-hosted services"
+    ],
+    "built": [
+      "Used a Dell PowerEdge R630 with dual Xeon E5-2680 v4 processors as a lab platform.",
+      "Created Linux VMs and LXC containers for services including networking, game hosting, and application experiments.",
+      "Worked with Proxmox 8.4, storage allocation, CPU/RAM assignment, and network reachability. Hardware allocations have changed over time."
+    ],
+    "issues": [
+      [
+        "Choosing VM or LXC",
+        "Compared the lighter resource footprint of containers with the isolation and full operating system of a VM."
+      ],
+      [
+        "Storage allocation",
+        "Investigated the difference between a virtual disk\u2019s capacity and the space available inside a guest filesystem."
+      ]
+    ],
+    "lessons": [
+      "Virtualization lets one server support several independent experiments.",
+      "Document the guest, host, network, and storage layers separately when troubleshooting."
+    ],
+    "status": "Documented build",
+    "repo": null
+  },
+  {
+    "slug": "pangolin",
+    "title": "Cloud-to-Home Reverse Proxy",
+    "category": "Networking",
+    "stack": [
+      "AWS EC2",
+      "Pangolin",
+      "Newt",
+      "Cloudflare",
+      "Traefik"
+    ],
+    "description": "A cloud entry point connected to home-hosted applications through a Newt tunnel.",
+    "flow": [
+      "Cloudflare",
+      "AWS EC2 / Pangolin",
+      "Newt tunnel",
+      "Home services"
+    ],
+    "built": [
+      "Hosted Pangolin on AWS EC2 and connected the home network through Newt.",
+      "Worked on routing to Proxmox, AMP, and a Next.js application.",
+      "Investigated the ongoing cost of the cloud endpoint after AWS credits, including local alternatives. Current hosting status needs an update."
+    ],
+    "issues": [
+      [
+        "Proxmox upstream TLS",
+        "The Proxmox backend uses HTTPS on port 8006. Turning off upstream TLS led to a gateway timeout during troubleshooting."
+      ],
+      [
+        "Proxy routing",
+        "Worked through Traefik routers, upstream protocols, and certificate handling across several network hops."
+      ]
+    ],
+    "lessons": [
+      "A tunnel and a reverse proxy handle different parts of the request path.",
+      "Trace DNS, the public endpoint, tunnel connectivity, and backend reachability one hop at a time."
+    ],
+    "status": "Historical setup",
+    "repo": null
+  },
+  {
+    "slug": "local-proxy",
+    "title": "Local Reverse Proxy",
+    "category": "Networking",
+    "stack": [
+      "Nginx Proxy Manager",
+      "DNS",
+      "LAN"
+    ],
+    "description": "Name-based access to applications inside the home network.",
+    "flow": [
+      "Client hostname",
+      "Local DNS",
+      "Nginx Proxy Manager",
+      "LAN application"
+    ],
+    "built": [
+      "Moved toward LAN-only application access with Nginx Proxy Manager.",
+      "Configured DNS records to direct hostnames to a private reverse-proxy address.",
+      "Investigated name-resolution and browser connection errors while bringing the local route online."
+    ],
+    "issues": [
+      [
+        "Wrong DNS target",
+        "A hostname resolved to 0.0.0.0. The A record was corrected to the intended LAN proxy address."
+      ],
+      [
+        "QUIC / connection errors",
+        "Checked name resolution and the intended local route while troubleshooting browser errors. The final browser configuration was not recorded."
+      ]
+    ],
+    "lessons": [
+      "A reverse-proxy rule cannot help if DNS sends the client to the wrong address.",
+      "Check hostname resolution before changing application settings."
+    ],
+    "status": "Documented build",
+    "repo": null
+  },
+  {
+    "slug": "wireguard",
+    "title": "WireGuard Remote Access",
+    "category": "Networking",
+    "stack": [
+      "WireGuard",
+      "Linux",
+      "iOS",
+      "UDM Pro"
+    ],
+    "description": "A self-hosted VPN for reaching home services from a phone and remote networks.",
+    "flow": [
+      "Remote device",
+      "WireGuard endpoint",
+      "Home network",
+      "Private services"
+    ],
+    "built": [
+      "Ran WireGuard in the home lab, including Linux container-based setups.",
+      "Configured an iPhone peer and worked with endpoint, port, and routing settings.",
+      "Later explored access with the UDM Pro network. Exact current peer and routing configuration is not included here."
+    ],
+    "issues": [
+      [
+        "Endpoint reachability",
+        "Worked with UDP 51820 and endpoint addressing. A private LAN endpoint only works directly from networks that can reach it."
+      ],
+      [
+        "Testing from outside",
+        "Cellular testing helps distinguish actual remote connectivity from a test made on the same home Wi-Fi."
+      ]
+    ],
+    "lessons": [
+      "VPN connectivity depends on both the tunnel handshake and routes to the destination.",
+      "Keep peer private keys and exported VPN configurations out of documentation."
+    ],
+    "status": "Documented build",
+    "repo": null
+  },
+  {
+    "slug": "dns",
+    "title": "Pi-hole & Recursive DNS",
+    "category": "Networking",
+    "stack": [
+      "Raspberry Pi",
+      "Pi-hole",
+      "Unbound",
+      "DNS"
+    ],
+    "description": "Network-wide DNS filtering paired with a local recursive resolver.",
+    "flow": [
+      "LAN clients",
+      "Pi-hole",
+      "Unbound :5335",
+      "DNS hierarchy"
+    ],
+    "built": [
+      "Ran Pi-hole on a Raspberry Pi and configured Unbound as a local resolver at 127.0.0.1:5335.",
+      "Used query logs and direct DNS tests to investigate failing domains and upstream behavior.",
+      "Worked through IPv6 DNS bypass, DNSSEC settings, and differences between container and Raspberry Pi deployments."
+    ],
+    "issues": [
+      [
+        "SERVFAIL responses",
+        "Several domains failed while others resolved. Resolver settings and service restarts were part of the troubleshooting; the final complete configuration was not captured."
+      ],
+      [
+        "Clients bypassing Pi-hole",
+        "Investigated IPv6 DNS supplied by the router as a path around the configured Pi-hole resolver."
+      ],
+      [
+        "Filtering limits",
+        "DNS filtering cannot independently remove every advertisement served from the same domains as desired content."
+      ]
+    ],
+    "lessons": [
+      "Test the client, Pi-hole, and upstream resolver independently.",
+      "A successful lookup does not prove every device uses the intended DNS server."
+    ],
+    "status": "Documented build",
+    "repo": null
+  },
+  {
+    "slug": "cisco",
+    "title": "Cisco Switching Lab",
+    "category": "Networking",
+    "stack": [
+      "Cisco 2960X",
+      "IOS",
+      "VLANs",
+      "SSH"
+    ],
+    "description": "Hands-on managed-switch configuration with a Cisco WS-C2960X-48LPS-L.",
+    "flow": [
+      "Router / gateway",
+      "Cisco switch",
+      "VLAN / access ports",
+      "Lab devices"
+    ],
+    "built": [
+      "Connected to the switch through a USB serial console, including a Windows COM7 session.",
+      "Worked with VLAN 1, management addressing, access/trunk concepts, and links to another switch.",
+      "Configured the switch hostname riverswitch and explored SSH management."
+    ],
+    "issues": [
+      [
+        "Management access",
+        "Separated console access from IP-based management while learning initial switch configuration."
+      ],
+      [
+        "Uplink behavior",
+        "Investigated how access and trunk settings affect connectivity between switches. Final port assignments need to be recorded."
+      ]
+    ],
+    "lessons": [
+      "A switch\u2019s management IP and its Layer 2 forwarding serve different purposes.",
+      "Record port roles and VLAN membership alongside configuration changes."
+    ],
+    "status": "Documented build",
+    "repo": null
+  },
+  {
+    "slug": "game-hosting",
+    "title": "Dedicated Game Servers",
+    "category": "Self-hosting",
+    "stack": [
+      "AMP",
+      "Minecraft",
+      "Satisfactory",
+      "Linux"
+    ],
+    "description": "A self-hosted environment for running and managing multiplayer game servers.",
+    "flow": [
+      "Players",
+      "Network route",
+      "AMP / server process",
+      "Game world"
+    ],
+    "built": [
+      "Used AMP while working with dedicated servers in the home lab.",
+      "Experimented with Minecraft variants including Spigot, Fabric, Pixelmon, and Cobblemon.",
+      "Worked on Satisfactory hosting, required ports, and connectivity. Separate instance versions and final configurations are still to be documented."
+    ],
+    "issues": [
+      [
+        "Reachability",
+        "Investigated the relationship between application listeners, firewall rules, NAT, and client connections."
+      ],
+      [
+        "Modded environments",
+        "Worked with different Minecraft server ecosystems; each instance needs matching game, loader, and mod versions."
+      ]
+    ],
+    "lessons": [
+      "Test a game server on the LAN before diagnosing access from outside.",
+      "Keep a per-instance record of versions, ports, and world data."
+    ],
+    "status": "Documented build",
+    "repo": null
+  },
+  {
+    "slug": "umbrel",
+    "title": "Umbrel Bitcoin Node",
+    "category": "Self-hosting",
+    "stack": [
+      "UmbrelOS",
+      "Bitcoin Core",
+      "Proxmox",
+      "Lightning"
+    ],
+    "description": "A Bitcoin node experiment hosted in an UmbrelOS virtual machine.",
+    "flow": [
+      "Proxmox VM",
+      "UmbrelOS",
+      "Bitcoin Core",
+      "Bitcoin network"
+    ],
+    "built": [
+      "Installed UmbrelOS in a virtual machine and worked with the Bitcoin node application.",
+      "Explored CPU and memory allocation, database cache, and a virtual disk around 1.3 TB.",
+      "Investigated Lightning and how its node operations differ from simply running Bitcoin Core."
+    ],
+    "issues": [
+      [
+        "Guest disk capacity",
+        "Worked through a case where increasing virtual disk capacity did not immediately make all space usable inside the guest. Storage resizing was later reported resolved."
+      ],
+      [
+        "Ephemeral terminal changes",
+        "Umbrel warns that terminal modifications may not survive updates; persistent configuration requires care."
+      ]
+    ],
+    "lessons": [
+      "Node synchronization depends on storage and I/O as well as CPU and memory.",
+      "Separate VM disk size, partition size, and filesystem size when checking capacity."
+    ],
+    "status": "Documented build",
+    "repo": null
+  },
+  {
+    "slug": "bitaxe",
+    "title": "Bitaxe Mining Experiment",
+    "category": "Hardware",
+    "stack": [
+      "Bitaxe 601",
+      "SHA-256",
+      "Mining pool"
+    ],
+    "description": "A small mining hardware experiment focused on setup and performance troubleshooting.",
+    "flow": [
+      "Bitaxe",
+      "Network",
+      "Mining pool",
+      "Share reporting"
+    ],
+    "built": [
+      "Set up a Bitaxe 601 and investigated pool connectivity and reported hash rate.",
+      "Observed performance around 0.4 TH/s during troubleshooting.",
+      "Reported that restarting the device resolved the immediate performance issue."
+    ],
+    "issues": [
+      [
+        "Low reported hash rate",
+        "A restart improved the reported issue. A sustained benchmark and final tuning values have not been recorded."
+      ]
+    ],
+    "lessons": [
+      "Short-term readings and long-term averages can tell different stories.",
+      "Record temperature, operating settings, and observation period when comparing performance."
+    ],
+    "status": "Documented build",
+    "repo": null
+  },
+  {
+    "slug": "omarchy",
+    "title": "Omarchy Virtual Machine",
+    "category": "Infrastructure",
+    "stack": [
+      "VirtualBox",
+      "Omarchy",
+      "Hyprland",
+      "Linux"
+    ],
+    "description": "A Linux desktop experiment inside VirtualBox on a Windows laptop.",
+    "flow": [
+      "Windows laptop",
+      "VirtualBox",
+      "Omarchy",
+      "Hyprland"
+    ],
+    "built": [
+      "Installed Omarchy in a VirtualBox VM on the Lenovo laptop.",
+      "Worked through a blank desktop with a visible mouse cursor.",
+      "Reported a working Hyprland desktop after enabling software OpenGL; display scaling was the next adjustment."
+    ],
+    "issues": [
+      [
+        "Blank graphical desktop",
+        "Kept VMSVGA, 128 MB display memory, and 3D acceleration, then added LIBGL_ALWAYS_SOFTWARE=1 through the Hyprland environment configuration."
+      ],
+      [
+        "Missing editor",
+        "The expected nano command was unavailable, requiring another way to edit the configuration."
+      ]
+    ],
+    "lessons": [
+      "A running cursor does not guarantee the desktop renderer initialized successfully.",
+      "Software rendering can help isolate a virtual GPU compatibility issue."
+    ],
+    "status": "Documented build",
+    "repo": null
+  },
+  {
+    "slug": "containers",
+    "title": "Container & Service Management",
+    "category": "Self-hosting",
+    "stack": [
+      "Docker",
+      "Compose",
+      "Portainer",
+      "Traefik"
+    ],
+    "description": "Experiments with packaging, managing, and routing self-hosted applications.",
+    "flow": [
+      "Compose definition",
+      "Containers",
+      "Proxy / network",
+      "Application"
+    ],
+    "built": [
+      "Worked with Docker Compose for Pangolin and its supporting services.",
+      "Used Portainer and explored Traefik routing for services such as AMP and Proxmox.",
+      "Investigated container networking, router configuration, and certificates. A complete inventory of Compose stacks has not yet been captured."
+    ],
+    "issues": [
+      [
+        "Windows prerequisites",
+        "Docker reported missing virtualization support even though BIOS virtualization was enabled. Windows showed an active hypervisor, while WSL was not yet installed."
+      ],
+      [
+        "Service routes",
+        "Worked on matching hostnames and paths to the correct backend and protocol."
+      ]
+    ],
+    "lessons": [
+      "Host virtualization support and a working Docker backend are separate prerequisites.",
+      "Document volumes, networks, and environment variable names without exposing secret values."
+    ],
+    "status": "Documented build",
+    "repo": null
+  },
+  {
+    "slug": "audio-storage",
+    "title": "Audio & Video Storage Calculator",
+    "category": "Development",
+    "stack": [
+      "Python",
+      "NJIT AFS",
+      "IT101"
+    ],
+    "description": "A coursework script that calculates uncompressed media storage from recording settings.",
+    "flow": [
+      "Sample settings",
+      "Python calculation",
+      "Byte conversion",
+      "Formatted output"
+    ],
+    "built": [
+      "Ran audio_storage.py in the NJIT AFS environment for IT101 homework.",
+      "Produced a table of sample rate, channel type, bit depth, duration, kilobytes, and megabytes.",
+      "Worked with variables, calculations, formatting, and a text file containing script execution instructions."
+    ],
+    "issues": [
+      [
+        "Unit conversions",
+        "Connected bits per sample, samples per second, channels, and recording duration to storage size."
+      ],
+      [
+        "Remote execution",
+        "Used python3 with the script path on AFS and captured the output for the assignment."
+      ]
+    ],
+    "lessons": [
+      "State whether KB/MB use decimal or binary units.",
+      "Keep inputs and displayed precision clear so calculations can be checked."
+    ],
+    "status": "Documented build",
+    "repo": null
+  }
+]
